@@ -8,11 +8,11 @@ import org.bukkit.plugin.Plugin
 
 @Serializable
 data class LocationsConfiguration(
-    @Serializable(with = LocationSerializer::class) val marketPlaceLocation: Location,
-    @Serializable(with = LocationSerializer::class) val spawnLocation: Location,
-    @Serializable(with = LocationSerializer::class) val dailyBonusLocation: Location,
-    @Serializable(with = LocationSerializer::class) val cityBuildLocation: Location,
-    @Serializable(with = LocationSerializer::class) val luckyWallsLocation: Location,
+    @Serializable(with = LocationSerializer::class) var marketPlaceLocation: Location,
+    @Serializable(with = LocationSerializer::class) var spawnLocation: Location,
+    @Serializable(with = LocationSerializer::class) var dailyBonusLocation: Location,
+    @Serializable(with = LocationSerializer::class) var cityBuildLocation: Location,
+    @Serializable(with = LocationSerializer::class) var luckyWallsLocation: Location,
 ) {
     companion object {
 

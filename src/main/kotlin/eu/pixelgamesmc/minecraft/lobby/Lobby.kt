@@ -1,5 +1,6 @@
 package eu.pixelgamesmc.minecraft.lobby
 
+import eu.pixelgamesmc.minecraft.lobby.command.SetLocationCommand
 import eu.pixelgamesmc.minecraft.lobby.listener.PlayerInventoryListener
 import eu.pixelgamesmc.minecraft.lobby.listener.PlayerVisibilityListener
 import eu.pixelgamesmc.minecraft.lobby.listener.PlayerVitalityListener
@@ -12,6 +13,8 @@ class Lobby: JavaPlugin() {
 
     override fun onEnable() {
         ComponentProvider.loadComponents(this)
+
+        PluginUtil.registerCommands(this, SetLocationCommand(this))
 
         PluginUtil.registerEvents(this, PlayerInventoryListener(this), PlayerVitalityListener(), PlayerVisibilityListener(this), WorldListener())
     }
