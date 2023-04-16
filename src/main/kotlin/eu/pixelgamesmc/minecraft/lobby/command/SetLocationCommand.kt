@@ -32,6 +32,7 @@ class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation"
             LocationType.CITY_BUILD -> locationsConfiguration.cityBuildLocation = location
             LocationType.LUCKY_WALLS -> locationsConfiguration.luckyWallsLocation = location
         }
+        locationsConfiguration.saveConfiguration(plugin)
         CommandSenderUtil.sendMessage(player, CommandSenderUtil.getComponent(player, "lobby", "prefix"), "lobby", "set_location", "{location}" to locationType)
         return true
     }
