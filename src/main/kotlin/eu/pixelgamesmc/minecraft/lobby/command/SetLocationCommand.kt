@@ -37,6 +37,14 @@ class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation"
         return true
     }
 
+    override fun tabComplete(sender: CommandSender, alias: String, args: Array<out String>): List<String> {
+        if (args.isEmpty()) {
+            return LocationType.values().map { it.name }
+        }
+
+        return listOf()
+    }
+
     enum class LocationType {
         MARKET_PLACE, SPAWN, DAILY_REWARDS, CITY_BUILD, LUCKY_WALLS
     }
