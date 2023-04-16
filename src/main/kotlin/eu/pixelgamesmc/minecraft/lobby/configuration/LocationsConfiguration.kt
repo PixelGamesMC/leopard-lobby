@@ -19,7 +19,7 @@ data class LocationsConfiguration(
         private var instance: LocationsConfiguration? = null
 
         fun getConfiguration(plugin: Plugin): LocationsConfiguration {
-            return instance ?: PluginUtil.loadConfiguration(plugin, LocationsConfiguration(
+            return instance ?: PluginUtil.loadConfiguration(plugin, "locations", LocationsConfiguration(
                 Location(plugin.server.worlds.first(), 0.0, 0.0, 0.0, 0.0f, 0.0f),
                 Location(plugin.server.worlds.first(), 0.0, 0.0, 0.0, 0.0f, 0.0f),
                 Location(plugin.server.worlds.first(), 0.0, 0.0, 0.0, 0.0f, 0.0f),
@@ -32,6 +32,6 @@ data class LocationsConfiguration(
     }
 
     fun saveConfiguration(plugin: Plugin) {
-        PluginUtil.saveConfiguration(plugin, this)
+        PluginUtil.saveConfiguration(plugin, "locations", this)
     }
 }
