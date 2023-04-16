@@ -37,7 +37,6 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
         val navigator = ItemStack(Material.COMPASS)
         navigator.editMeta { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "navigator_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "navigator_lore"))
         }
         inventory.setItem(navigatorSlot, navigator)
 
@@ -46,14 +45,12 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
         val gadgets = ItemStack(Material.CHEST)
         gadgets.editMeta { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "gadgets_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "gadgets_lore"))
         }
         inventory.setItem(gadgetsSlot, gadgets)
 
         val profile = ItemStack(Material.PLAYER_HEAD)
         profile.editMeta(SkullMeta::class.java) { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "profile_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "profile_lore"))
 
             meta.playerProfile = player.playerProfile
         }
@@ -62,7 +59,6 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
         val lobbySwitcher = ItemStack(Material.NETHER_STAR)
         lobbySwitcher.editMeta { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "lobby_switcher_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "lobby_switcher_lore"))
         }
         inventory.setItem(lobbySwitcherSlot, lobbySwitcher)
     }

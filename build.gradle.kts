@@ -33,7 +33,10 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:25fd489")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:c60effc")
+    compileOnly("de.dytanic.cloudnet:cloudnet-driver:3.4.0-RELEASE")
+    compileOnly("de.dytanic.cloudnet:cloudnet-bridge:3.4.0-RELEASE")
+    compileOnly("de.dytanic.cloudnet:cloudnet-wrapper-jvm:3.4.0-RELEASE")
 
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
@@ -90,5 +93,5 @@ bukkit {
     main = "eu.pixelgamesmc.minecraft.lobby.Lobby"
     apiVersion = "1.19"
     authors = listOf("NitrinCloud")
-    depend = listOf("ServerCore")
+    depend = listOf("ServerCore", "CloudNetAPI")
 }

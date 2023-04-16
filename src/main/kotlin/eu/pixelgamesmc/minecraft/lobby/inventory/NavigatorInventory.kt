@@ -1,5 +1,7 @@
 package eu.pixelgamesmc.minecraft.lobby.inventory
 
+import de.dytanic.cloudnet.driver.CloudNetDriver
+import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager
 import eu.pixelgamesmc.minecraft.lobby.configuration.LocationsConfiguration
 import eu.pixelgamesmc.minecraft.servercore.inventory.ClickablePlayerInventory
 import eu.pixelgamesmc.minecraft.servercore.utility.CommandSenderUtil
@@ -44,10 +46,14 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
         }
         setItem(dailyBonusSlot, dailyBonus)
 
+        val playerManager = CloudNetDriver.getInstance().servicesRegistry.getFirstService(IPlayerManager::class.java)
+
         val cityBuild = ItemStack(Material.PLAYER_HEAD)
         cityBuild.editMeta(SkullMeta::class.java) { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "city_build_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "city_build_lore"))
+            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "city_build_lore",
+                "{player_count}" to playerManager.taskOnlinePlayers("CityBuild").count(),
+                "{connection_status}" to "ONLINE"))
             meta.playerProfile = Bukkit.createProfile(UUID.randomUUID()).apply {
                 val cache = textures
                 cache.skin = URL("https://textures.minecraft.net/texture/219e36a87baf0ac76314352f59a7f63bdb3f4c86bd9bba6927772c01d4d1")
@@ -59,7 +65,9 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
         val luckyWalls = ItemStack(Material.PLAYER_HEAD)
         luckyWalls.editMeta(SkullMeta::class.java) { meta ->
             meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "lucky_walls_display"))
-            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "lucky_walls_lore"))
+            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "lucky_walls_lore",
+                "{player_count}" to playerManager.taskOnlinePlayers("LuckyWalls").count(),
+                "{connection_status}" to "ONLINE"))
             meta.playerProfile = Bukkit.createProfile(UUID.randomUUID()).apply {
                 val cache = textures
                 cache.skin = URL("https://textures.minecraft.net/texture/ac4970ea91ab06ece59d45fce7604d255431f2e03a737b226082c4cce1aca1c4")

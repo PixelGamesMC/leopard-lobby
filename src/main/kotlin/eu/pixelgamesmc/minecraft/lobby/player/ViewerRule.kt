@@ -15,21 +15,18 @@ enum class ViewerRule {
             val playerHiderAll = ItemStack(Material.LIME_DYE)
             playerHiderAll.editMeta { meta ->
                 meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "player_hider_all_display"))
-                meta.lore(CommandSenderUtil.getComponents(player, "lobby", "player_hider_all_lore"))
             }
             return playerHiderAll
         } else if (this == VIP) {
             val playerHiderVIP = ItemStack(Material.PURPLE_DYE)
             playerHiderVIP.editMeta { meta ->
                 meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "player_hider_vip_display"))
-                meta.lore(CommandSenderUtil.getComponents(player, "lobby", "player_hider_vip_lore"))
             }
             return playerHiderVIP
         } else {
             val playerHiderNone = ItemStack(Material.GRAY_DYE)
             playerHiderNone.editMeta { meta ->
                 meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "player_hider_none_display"))
-                meta.lore(CommandSenderUtil.getComponents(player, "lobby", "player_hider_none_lore"))
             }
             return playerHiderNone
         }
