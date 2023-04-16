@@ -16,6 +16,6 @@ class Lobby: JavaPlugin() {
 
         PluginUtil.registerCommands(this, SetLocationCommand(this))
 
-        PluginUtil.registerEvents(this, PlayerInventoryListener(this), PlayerVitalityListener(), PlayerVisibilityListener(this), WorldListener())
+        PluginUtil.registerEvents(this, PlayerInventoryListener(this), PlayerVitalityListener(), PlayerVisibilityListener(this), WorldListener(this))
     }
 }
