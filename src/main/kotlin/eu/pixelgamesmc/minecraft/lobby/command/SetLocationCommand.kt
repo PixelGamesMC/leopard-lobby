@@ -18,7 +18,7 @@ class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation"
             return false
         }
         val locationType = try {
-            LocationType.valueOf(args[0])
+            LocationType.valueOf(args[0].uppercase())
         } catch (e: IllegalArgumentException) {
             CommandSenderUtil.sendMessage(player, CommandSenderUtil.getComponent(sender, "lobby", "prefix"), "lobby", "wrong_location_type")
             return false
@@ -38,8 +38,8 @@ class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation"
     }
 
     override fun tabComplete(sender: CommandSender, alias: String, args: Array<out String>): List<String> {
-        if (args.isEmpty()) {
-            return LocationType.values().map { it.name }
+        if (args.size == 1) {
+            return LocationType.values().map { it.name }.filter { it.startsWith(args[0].uppercase()) }
         }
 
         return listOf()
