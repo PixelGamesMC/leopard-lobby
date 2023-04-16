@@ -14,7 +14,7 @@ import org.bukkit.plugin.Plugin
 import java.net.URL
 import java.util.*
 
-class NavigatorInventory(private val plugin: Plugin, player: Player): ClickablePlayerInventory(player, 9*5, CommandSenderUtil.getComponent(player, "lobby", "navigator_title")) {
+class NavigatorInventory(private val plugin: Plugin, player: Player): ClickablePlayerInventory(player, 9*5, CommandSenderUtil.getComponent(player, "lobby", "navigator_inventory_title")) {
 
     private val marketPlaceSlot = 11
     private val spawnSlot = 13
