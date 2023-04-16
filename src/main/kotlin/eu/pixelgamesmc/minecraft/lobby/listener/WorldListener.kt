@@ -7,17 +7,8 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntitySpawnEvent
-import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.plugin.Plugin
 
-class WorldListener(private val plugin: Plugin): Listener {
-
-    @EventHandler
-    fun playerJoin(event: PlayerJoinEvent) {
-        val locationsConfiguration = LocationsConfiguration.getConfiguration(plugin)
-
-        event.player.teleport(locationsConfiguration.spawnLocation)
-    }
+class WorldListener: Listener {
 
     @EventHandler
     fun blockPlace(event: BlockPlaceEvent) {
