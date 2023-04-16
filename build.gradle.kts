@@ -33,7 +33,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:-SNAPSHOT")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:601efc6")
 
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
