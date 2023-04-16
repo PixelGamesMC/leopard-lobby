@@ -33,7 +33,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:1.0")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:+")
 
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
@@ -85,9 +85,9 @@ tasks {
 }
 
 bukkit {
-    name = "Starter"
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-    main = "eu.pixelgamesmc.minecraft.starter.Starter"
+    name = "Lobby"
+    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
+    main = "eu.pixelgamesmc.minecraft.lobby.Lobby"
     apiVersion = "1.19"
     authors = listOf("NitrinCloud")
     depend = listOf("ServerCore")

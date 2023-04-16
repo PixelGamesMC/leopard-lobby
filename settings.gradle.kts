@@ -1,3 +1,3 @@
 
-rootProject.name = "leopard-starter"
+rootProject.name = "leopard-lobby"
 
