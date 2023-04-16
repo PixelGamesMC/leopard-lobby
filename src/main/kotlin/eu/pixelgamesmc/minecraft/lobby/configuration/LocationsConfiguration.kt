@@ -1,4 +1,4 @@
-package eu.pixelgamesmc.minecraft.lobby.entitiy
+package eu.pixelgamesmc.minecraft.lobby.configuration
 
 import eu.pixelgamesmc.minecraft.lobby.utlity.codec.LocationSerializer
 import eu.pixelgamesmc.minecraft.servercore.utility.PluginUtil

@@ -1,6 +1,6 @@
 package eu.pixelgamesmc.minecraft.lobby.inventory
 
-import eu.pixelgamesmc.minecraft.lobby.entitiy.LocationsConfiguration
+import eu.pixelgamesmc.minecraft.lobby.configuration.LocationsConfiguration
 import eu.pixelgamesmc.minecraft.servercore.inventory.ClickablePlayerInventory
 import eu.pixelgamesmc.minecraft.servercore.utility.CommandSenderUtil
 import org.bukkit.Bukkit
