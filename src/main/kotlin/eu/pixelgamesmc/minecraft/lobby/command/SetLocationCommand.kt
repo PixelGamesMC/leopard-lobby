@@ -2,6 +2,7 @@ package eu.pixelgamesmc.minecraft.lobby.command
 
 import eu.pixelgamesmc.minecraft.lobby.configuration.LocationsConfiguration
 import eu.pixelgamesmc.minecraft.servercore.command.PixelCommand
+import eu.pixelgamesmc.minecraft.servercore.component.ComponentProvider
 import eu.pixelgamesmc.minecraft.servercore.utility.CommandSenderUtil
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -9,18 +10,22 @@ import org.bukkit.plugin.Plugin
 
 class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation", true) {
 
+    init {
+        permission = "pixelgamesmc.lobby.setlocation"
+    }
+
     override fun performCommand(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
         val player = sender as Player
         val location = player.location
 
         if (args.size != 1) {
-            CommandSenderUtil.sendMessage(player, CommandSenderUtil.getComponent(sender, "lobby", "prefix"), "lobby", "wrong_arguments")
+            CommandSenderUtil.sendMessage(player, ComponentProvider.getCoreComponent("lobby", "prefix"), "lobby", "wrong_arguments")
             return false
         }
         val locationType = try {
             LocationType.valueOf(args[0].uppercase())
         } catch (e: IllegalArgumentException) {
-            CommandSenderUtil.sendMessage(player, CommandSenderUtil.getComponent(sender, "lobby", "prefix"), "lobby", "wrong_location_type")
+            CommandSenderUtil.sendMessage(player, ComponentProvider.getCoreComponent("lobby", "prefix"), "lobby", "wrong_location_type")
             return false
         }
 
@@ -33,7 +38,7 @@ class SetLocationCommand(private val plugin: Plugin): PixelCommand("setlocation"
             LocationType.LUCKY_WALLS -> locationsConfiguration.luckyWallsLocation = location
         }
         locationsConfiguration.saveConfiguration(plugin)
-        CommandSenderUtil.sendMessage(player, CommandSenderUtil.getComponent(player, "lobby", "prefix"), "lobby", "set_location", "{location}" to locationType)
+        CommandSenderUtil.sendMessage(player, ComponentProvider.getCoreComponent("lobby", "prefix"), "lobby", "set_location", "{location}" to locationType)
         return true
     }
 

@@ -33,10 +33,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:c60effc")
-    compileOnly("de.dytanic.cloudnet:cloudnet-driver:3.4.0-RELEASE")
-    compileOnly("de.dytanic.cloudnet:cloudnet-bridge:3.4.0-RELEASE")
-    compileOnly("de.dytanic.cloudnet:cloudnet-wrapper-jvm:3.4.0-RELEASE")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:1ec3070")
+    compileOnly("eu.thesimplecloud.simplecloud:simplecloud-api:2.4.1")
 
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
@@ -93,5 +91,5 @@ bukkit {
     main = "eu.pixelgamesmc.minecraft.lobby.Lobby"
     apiVersion = "1.19"
     authors = listOf("NitrinCloud")
-    depend = listOf("ServerCore", "CloudNetAPI")
+    depend = listOf("SimpleCloud-Plugin", "ServerCore")
 }

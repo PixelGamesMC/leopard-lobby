@@ -1,5 +1,6 @@
 package eu.pixelgamesmc.minecraft.lobby.listener
 
+import eu.pixelgamesmc.minecraft.lobby.inventory.LobbySwitcherInventory
 import eu.pixelgamesmc.minecraft.lobby.inventory.NavigatorInventory
 import eu.pixelgamesmc.minecraft.lobby.player.ViewerRule
 import eu.pixelgamesmc.minecraft.lobby.player.getViewerRule
@@ -13,7 +14,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryCreativeEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
@@ -70,7 +70,12 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
             val player = event.player
             val inventory = player.inventory
 
-            when (inventory.indexOf(item)) {
+            val slot = inventory.indexOf(item)
+            if (!(slot == navigatorSlot || slot == playerHiderSlot || slot == gadgetsSlot || slot == profileSlot || slot == lobbySwitcherSlot)) {
+                return
+            }
+
+            when (slot) {
                 navigatorSlot -> {
                     val navigatorInventory = NavigatorInventory(plugin, player)
                     navigatorInventory.openInventory(player)
@@ -122,7 +127,8 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
                 }
 
                 lobbySwitcherSlot -> {
-                    CommandSenderUtil.sendMessage(player, ComponentProvider.getCoreComponent("lobby", "prefix"), "lobby", "not_implemented")
+                    val lobbySwitcherInventory = LobbySwitcherInventory(player)
+                    lobbySwitcherInventory.openInventory(player)
                 }
             }
             player.playSound(player, Sound.BLOCK_WOOD_BREAK, .25f, 1.0f)
@@ -132,33 +138,21 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
 
     @EventHandler
     fun inventoryClick(event: InventoryClickEvent) {
-        if (event.inventory.holder == event.whoClicked.inventory.holder) {
-            val slot = event.slot
-            if (slot == navigatorSlot || slot == playerHiderSlot || slot == gadgetsSlot || slot == profileSlot || slot == lobbySwitcherSlot) {
-                event.isCancelled = true
-            }
-        }
-    }
+        val entity = event.whoClicked
+        val currentItem = event.currentItem
 
-    @EventHandler
-    fun inventoryCreative(event: InventoryCreativeEvent) {
-        if (event.clickedInventory?.holder == event.whoClicked.inventory.holder) {
-            val slot = event.slot
-            if (slot == navigatorSlot || slot == playerHiderSlot || slot == gadgetsSlot || slot == profileSlot || slot == lobbySwitcherSlot) {
-                event.isCancelled = true
+        if (currentItem != null) {
+            if (event.inventory.holder == entity.inventory.holder) {
+                val slot = event.slot
+                if (slot == navigatorSlot || slot == playerHiderSlot || slot == gadgetsSlot || slot == profileSlot || slot == lobbySwitcherSlot) {
+                    event.isCancelled = true
+                }
             }
         }
     }
 
     @EventHandler
     fun playerDrop(event: PlayerDropItemEvent) {
-        val item = event.itemDrop.itemStack
-        val player = event.player
-        val inventory = player.inventory
-        val index = inventory.indexOf(item)
-
-        if (index == navigatorSlot || index == playerHiderSlot || index == gadgetsSlot || index == profileSlot || index == lobbySwitcherSlot) {
-            event.isCancelled = true
-        }
+        event.isCancelled = true
     }
 }

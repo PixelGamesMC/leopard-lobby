@@ -1,5 +1,6 @@
 package eu.pixelgamesmc.minecraft.lobby.listener
 
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
@@ -11,6 +12,8 @@ class PlayerVitalityListener: Listener {
     @EventHandler
     fun playerJoin(event: PlayerJoinEvent) {
         val player = event.player
+
+        player.gameMode = GameMode.SURVIVAL
 
         player.foodLevel = 20
         player.health = 20.0
