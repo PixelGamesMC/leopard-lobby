@@ -33,7 +33,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:bda8227")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:b988a32")
     compileOnly("eu.thesimplecloud.simplecloud:simplecloud-api:2.4.1")
 
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
