@@ -10,7 +10,6 @@ import redis.clients.jedis.JedisPool
 import java.util.*
 
 class LobbyUserCollection(
-    jedisPool: JedisPool,
     collection: MongoCollection<LobbyUser>
 ): PixelCollection<LobbyUser>(
     collection

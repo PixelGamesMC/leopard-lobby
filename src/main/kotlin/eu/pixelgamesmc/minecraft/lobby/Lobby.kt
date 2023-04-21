@@ -12,8 +12,8 @@ import org.litote.kmongo.getCollection
 class Lobby: JavaPlugin() {
 
     override fun onEnable() {
-        PixelDatabase.registerCollection { jedisPool, mongoDatabase ->
-            LobbyUserCollection(jedisPool, mongoDatabase.getCollection())
+        PixelDatabase.registerCollection { mongoDatabase ->
+            LobbyUserCollection(mongoDatabase.getCollection())
         }
 
         ComponentProvider.loadComponents(this)
