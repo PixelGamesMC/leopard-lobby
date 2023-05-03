@@ -21,6 +21,7 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
     private val spawnSlot = 13
     private val dailyBonusSlot = 15
     private val cityBuildSlot = 30
+    private val itemFiestaSlot = 31
     private val luckyWallsSlot = 32
 
     init {
@@ -65,6 +66,24 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
         }
         setItem(cityBuildSlot, cityBuild)
 
+        val itemFiestaService = serviceManager.getCloudServicesByGroupName("ItemFiesta")
+        val playerCountItemFiesta = itemFiestaService.sumOf { it.getOnlineCount() }
+
+        val itemFiesta = ItemStack(Material.PLAYER_HEAD)
+        itemFiesta.editMeta(SkullMeta::class.java) { meta ->
+            meta.displayName(CommandSenderUtil.getComponent(player, "lobby", "item_fiesta_display"))
+            meta.lore(CommandSenderUtil.getComponents(player, "lobby", "item_fiesta_lore",
+                "{player_count}" to playerCountItemFiesta,
+                "{connection_status}" to if (itemFiestaService.isEmpty()) "&cOFFLINE" else "&aONLINE"))
+            meta.playerProfile = Bukkit.createProfile(UUID.randomUUID()).apply {
+                textures.apply {
+                    skin = URL("https://textures.minecraft.net/texture/63f4d555fb3b9357af7582f273800f1da4ac69b04210c3aa34e63db2a4235bbf")
+                    setTextures(this)
+                }
+            }
+        }
+        setItem(itemFiestaSlot, itemFiesta)
+
         val luckyWallsServices = serviceManager.getCloudServicesByGroupName("LuckyWalls")
         val playerCountLuckyWalls = serviceManager.getAllCachedObjects().filter { it.getGroupName().startsWith("LuckyWalls") }.sortedBy { it.getServiceNumber() }.sumOf { it.getOnlineCount() }
 
@@ -102,7 +121,7 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
             marketPlaceSlot -> player.teleport(locationsConfiguration.marketPlaceLocation)
             spawnSlot -> player.teleport(locationsConfiguration.spawnLocation)
             dailyBonusSlot -> player.teleport(locationsConfiguration.dailyBonusLocation)
-            cityBuildSlot, luckyWallsSlot -> {
+            cityBuildSlot, luckyWallsSlot, itemFiestaSlot -> {
                 val cloudPlayerPromise = cloudPlayerManager.getCloudPlayer(player.uniqueId)
 
                 val cloudService = when (slot) {
@@ -113,6 +132,10 @@ class NavigatorInventory(private val plugin: Plugin, player: Player): ClickableP
                     luckyWallsSlot -> {
                         val luckyWallsServices = serviceManager.getCloudServicesByGroupName("LuckyWalls")
                         luckyWallsServices.randomOrNull()
+                    }
+                    itemFiestaSlot -> {
+                        val itemFiestaService = serviceManager.getCloudServicesByGroupName("ItemFiesta")
+                        itemFiestaService.randomOrNull()
                     }
 
                     else -> {

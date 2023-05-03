@@ -33,10 +33,11 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
 
-    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:b988a32")
+    compileOnly("eu.pixelgamesmc.minecraft:leopard-servercore:040a1f0")
     compileOnly("eu.thesimplecloud.simplecloud:simplecloud-api:2.4.1")
+    compileOnly("net.luckperms:api:5.4")
 
-    paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.18.2-R0.1-SNAPSHOT")
 }
 
 kotlin {
@@ -87,9 +88,10 @@ tasks {
 
 bukkit {
     name = "Lobby"
-    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
+    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
     main = "eu.pixelgamesmc.minecraft.lobby.Lobby"
-    apiVersion = "1.19"
+    apiVersion = "1.18"
     authors = listOf("NitrinCloud")
-    depend = listOf("SimpleCloud-Plugin", "ServerCore")
+    depend = listOf("LuckPerms", "ServerCore")
+    loadBefore = listOf("SimpleCloud-Plugin")
 }

@@ -10,7 +10,9 @@ import eu.pixelgamesmc.minecraft.servercore.utility.CommandSenderUtil
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -20,6 +22,8 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.plugin.Plugin
+import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class PlayerInventoryListener(private val plugin: Plugin): Listener {
 
@@ -29,7 +33,7 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
     private val profileSlot = 7
     private val lobbySwitcherSlot = 8
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun playerJoin(event: PlayerJoinEvent) {
         val player = event.player
         val inventory = player.inventory
@@ -63,17 +67,29 @@ class PlayerInventoryListener(private val plugin: Plugin): Listener {
         inventory.setItem(lobbySwitcherSlot, lobbySwitcher)
     }
 
+    private val cooldown: MutableMap<UUID, Long> = mutableMapOf()
+
     @EventHandler
     fun playerInteract(event: PlayerInteractEvent) {
-        if (event.hasItem() && (event.action == Action.RIGHT_CLICK_AIR || event.action == Action.RIGHT_CLICK_BLOCK)) {
+        if (event.hasItem() && (event.action.isRightClick)) {
             val item = event.item
             val player = event.player
+
             val inventory = player.inventory
 
             val slot = inventory.indexOf(item)
             if (!(slot == navigatorSlot || slot == playerHiderSlot || slot == gadgetsSlot || slot == profileSlot || slot == lobbySwitcherSlot)) {
                 return
             }
+
+            val cooldown = cooldown[player.uniqueId]
+            val currentTimeMillis = System.currentTimeMillis()
+            if (cooldown != null) {
+                if (cooldown > currentTimeMillis) {
+                    return
+                }
+            }
+            this.cooldown[player.uniqueId] = currentTimeMillis + 10
 
             when (slot) {
                 navigatorSlot -> {
